@@ -23,6 +23,7 @@ public class Servidor {
                 Socket user = servidor.accept();
                 System.out.println("Conectado com "+user.getInetAddress().getHostAddress());
                 this.ipArrayList.add(user.getInetAddress().getHostAddress());
+                Monitor t = new Monitor(this, user);
             }
         }catch (IOException e) {
             System.out.println("Não obteve conexão.");
