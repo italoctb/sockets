@@ -32,9 +32,11 @@ public class Receiver implements Runnable{
     public void run() {
         try {
             while (true){
+                System.out.println("ola");
                 ObjectInputStream entrada = new ObjectInputStream(this.emissor.getInputStream());
                 Mensagem msg = (Mensagem) entrada.readObject();
                 this.msgList.add(msg);
+                System.out.println("add!");
             }
         } catch (IOException e) {
             e.printStackTrace();

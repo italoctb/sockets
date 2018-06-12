@@ -10,6 +10,8 @@ public class Monitor implements Runnable {
     public Monitor(Servidor servidor, Socket cliente) {
         this.servidor = servidor;
         this.cliente = cliente;
+        Thread t = new Thread(this);
+        t.start();
     }
 
     @Override
@@ -41,18 +43,24 @@ public class Monitor implements Runnable {
             System.out.println("Texto: " + msg.getTexto());
             //                System.out.println("Index: "+this.index);
             System.out.println();
-            for (int i = 0; i < servidor.clienteArrayList.size(); i++) {
-                System.out.println(msg.getName().intern() + "->IPDEST");
-                System.out.println(servidor.clienteArrayList.get(i).getName() + "->IPCLIENT");
-                if (servidor.clienteArrayList.get(i).getName().intern() ==
-                        msg.getName().intern()) {
-                    System.out.println("Entrou");
-                    ObjectOutputStream saida = new ObjectOutputStream(cliente.getOutputStream());
-                    saida.writeObject(msg);
-                    saida.flush();
-                    saida.close();
-                }
+            if(servidor.clienteArrayList.isEmpty()){
+                System.out.println("vazio!");
+            }else{
+                for (int i = 0; i < servidor.clienteArrayList.size(); i++) {
+                    if (servidor.clienteArrayList.get(i).getName().intern() ==
+                            msg.getDestinatario().intern()) {
+                        System.out.println(msg.getDestinatario().intern() + "->IPDEST");
+                        System.out.println(servidor.clienteArrayList.get(i).getName() + "->IPCLIENT");
+//                        ObjectOutputStream saida = new ObjectOutputStream(servidor.ipArrayList.get(i).getOutputStream());
+//                        saida.writeObject(msg);
+//                        saida.flush();
+//                        saida.close();
+                    }
+                    else{
+                        System.out.println("halou");
+                    }
 
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();

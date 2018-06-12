@@ -8,7 +8,7 @@ public class Servidor {
         new Servidor(2130).execute();
     }
     private int port;
-    static private ArrayList ipArrayList = new ArrayList();
+    static  ArrayList<Socket> ipArrayList = new <Socket>ArrayList();
     static public  ArrayList<Cliente> clienteArrayList = new <Cliente>ArrayList();
 
     public Servidor(int port) {
@@ -22,7 +22,7 @@ public class Servidor {
             while(true){
                 Socket user = servidor.accept();
                 System.out.println("Conectado com "+user.getInetAddress().getHostAddress());
-                this.ipArrayList.add(user.getInetAddress().getHostAddress());
+                this.ipArrayList.add(user);
                 Monitor t = new Monitor(this, user);
             }
         }catch (IOException e) {

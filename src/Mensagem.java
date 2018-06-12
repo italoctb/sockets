@@ -11,6 +11,10 @@ public class Mensagem implements Serializable {
     Date d = new Date();
     private String date = d.toString();
 
+    public Mensagem(String remetente) {
+        this.remetente = remetente;
+    }
+
     public String getAssunto() {
         return assunto;
     }

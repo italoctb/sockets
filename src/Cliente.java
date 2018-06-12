@@ -1,15 +1,13 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
+import java.io.Serializable;
 import java.net.UnknownHostException;
 
-public class Cliente {
+public class Cliente implements Serializable {
     private String Name;
     private String ip;
     private int port;
-    public Socket client;
+
     public boolean flag = false;
 
     public String getName() {
@@ -36,37 +34,31 @@ public class Cliente {
         this.port = port;
     }
 
-    public Cliente(String Name, String ip, int port) {
+
+    public Cliente(String Name, String ip) {
         this.Name = Name;
         this.ip = ip;
-        this.port = port;
-        try (Socket socket = this.client = new Socket(this.ip, this.port)) {
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
     }
 
     public static void main(String[] args) throws IOException {
         String Nome;
         String Ip;
-        boolean flag = true;
+        boolean flag1 = true;
         BufferedReader t_terminal = new BufferedReader(new InputStreamReader(System.in));
         System.out.print("Digite seu nome: ");
         Nome = t_terminal.readLine();
         System.out.print("Digite seu ip: ");
         Ip = t_terminal.readLine();
-        Cliente cliente = new Cliente(Nome, Ip, 2130);
-        Receiver rec = new Receiver(cliente.client);
-        ObjectOutputStream objSaida = new ObjectOutputStream(cliente.client.getOutputStream());
+        Socket cliente_socket = new Socket(Ip, 2130);
+        Cliente cliente = new Cliente(Nome, Ip);
+        Receiver rec = new Receiver(cliente_socket);
+        ObjectOutputStream objSaida = new ObjectOutputStream(cliente_socket.getOutputStream());
         objSaida.writeObject(cliente);
         objSaida.flush();
-        objSaida.close();
-        while(flag){
-            objSaida = new ObjectOutputStream(cliente.client.getOutputStream());
-            Mensagem msg = new Mensagem();
+//        objSaida.close();
+        while(flag1){
+            objSaida = new ObjectOutputStream(cliente_socket.getOutputStream());
+            Mensagem msg = new Mensagem(cliente.getName());
             System.out.print("Digite o nome do Destinatário: ");
             msg.setDestinatario(t_terminal.readLine());
             System.out.print("Digite o assunto: ");
@@ -76,12 +68,12 @@ public class Cliente {
             System.out.print("Deseja continuar?(Y/N) ");
             if (t_terminal.readLine().intern() == "N"){
                 msg.flag = false;
-                flag = false;
+                flag1 = false;
                 objSaida.writeObject(msg);
                 System.out.println();
                 System.out.print("Você deseja visualizar suas mensangens recebidas ?(Y/N) ");
                 if (t_terminal.readLine().intern() == "Y"){
-                    rec.getPilha();
+                    //rec.getPilha();
                 }
                 objSaida.close();
             }else{
