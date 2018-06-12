@@ -56,6 +56,6 @@ public class Cliente {
         System.out.print("Digite seu ip: ");
         Ip = t_terminal.readLine();
         Cliente cliente = new Cliente(Nome, Ip, 2130);
-        Receiver rec = new Receiver(cliente.client.getInputStream());
+        Receiver rec = new Receiver(cliente.client);
     }
 }
