@@ -1,7 +1,6 @@
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class Monitor implements Runnable {
     private Servidor servidor;
@@ -51,7 +50,14 @@ public class Monitor implements Runnable {
                             msg.getDestinatario().intern()) {
                         System.out.println(msg.getDestinatario().intern() + "->IPDEST");
                         System.out.println(servidor.clienteArrayList.get(i).getName() + "->IPCLIENT");
-//                        ObjectOutputStream saida = new ObjectOutputStream(servidor.ipArrayList.get(i).getOutputStream());
+                        Scanner teclado = new Scanner(System.in);
+                        PrintStream saida = new PrintStream(servidor.ipArrayList.get(i).getOutputStream());
+                        while(teclado.hasNextLine()){
+                            System.out.println("Digite: ");
+                            saida.println(teclado.nextLine());
+                        }
+                        saida.close();
+                        teclado.close();
 //                        saida.writeObject(msg);
 //                        saida.flush();
 //                        saida.close();

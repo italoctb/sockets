@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Receiver implements Runnable{
     private Socket emissor;
@@ -33,15 +34,19 @@ public class Receiver implements Runnable{
         try {
             while (true){
                 System.out.println("ola");
-                ObjectInputStream entrada = new ObjectInputStream(this.emissor.getInputStream());
-                Mensagem msg = (Mensagem) entrada.readObject();
-                this.msgList.add(msg);
+//                ObjectInputStream entrada = new ObjectInputStream(this.emissor.getInputStream());
+//                Mensagem msg = (Mensagem) entrada.readObject();
+//                this.msgList.add(msg);
+                Scanner entrada = new Scanner(this.emissor.getInputStream());
+                while (entrada.hasNextLine()) {
+                    System.out.println(entrada.nextLine());
+                }
                 System.out.println("add!");
             }
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } /*catch (ClassNotFoundException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }

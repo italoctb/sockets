@@ -43,7 +43,7 @@ public class Cliente implements Serializable {
     public static void main(String[] args) throws IOException {
         String Nome;
         String Ip;
-        boolean flag1 = true;
+        boolean flag = true;
         BufferedReader t_terminal = new BufferedReader(new InputStreamReader(System.in));
         System.out.print("Digite seu nome: ");
         Nome = t_terminal.readLine();
@@ -55,8 +55,7 @@ public class Cliente implements Serializable {
         ObjectOutputStream objSaida = new ObjectOutputStream(cliente_socket.getOutputStream());
         objSaida.writeObject(cliente);
         objSaida.flush();
-//        objSaida.close();
-        while(flag1){
+        while(flag){
             objSaida = new ObjectOutputStream(cliente_socket.getOutputStream());
             Mensagem msg = new Mensagem(cliente.getName());
             System.out.print("Digite o nome do Destinatário: ");
@@ -68,7 +67,7 @@ public class Cliente implements Serializable {
             System.out.print("Deseja continuar?(Y/N) ");
             if (t_terminal.readLine().intern() == "N"){
                 msg.flag = false;
-                flag1 = false;
+                flag = false;
                 objSaida.writeObject(msg);
                 System.out.println();
                 System.out.print("Você deseja visualizar suas mensangens recebidas ?(Y/N) ");
