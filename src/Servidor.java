@@ -9,6 +9,7 @@ public class Servidor {
     }
     private int port;
     static private ArrayList ipArrayList = new ArrayList();
+    static public  ArrayList<Cliente> clienteArrayList = new <Cliente>ArrayList();
 
     public Servidor(int port) {
         this.port = port;

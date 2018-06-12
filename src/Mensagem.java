@@ -43,7 +43,7 @@ public class Mensagem implements Serializable {
         this.destinatario = destinatario;
     }
 
-    public String getIp_destinatario() {
+    public String getName() {
         return ip_destinatario;
     }
 
