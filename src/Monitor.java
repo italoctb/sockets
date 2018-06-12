@@ -48,19 +48,17 @@ public class Monitor implements Runnable {
                 for (int i = 0; i < servidor.clienteArrayList.size(); i++) {
                     if (servidor.clienteArrayList.get(i).getName().intern() ==
                             msg.getDestinatario().intern()) {
-                        System.out.println(msg.getDestinatario().intern() + "->IPDEST");
-                        System.out.println(servidor.clienteArrayList.get(i).getName() + "->IPCLIENT");
-                        Scanner teclado = new Scanner(System.in);
-                        PrintStream saida = new PrintStream(servidor.ipArrayList.get(i).getOutputStream());
-                        while(teclado.hasNextLine()){
-                            System.out.println("Digite: ");
-                            saida.println(teclado.nextLine());
-                        }
-                        saida.close();
-                        teclado.close();
-//                        saida.writeObject(msg);
-//                        saida.flush();
-//                        saida.close();
+//                        System.out.println(msg.getDestinatario().intern() + "->IPDEST");
+//                        System.out.println(servidor.clienteArrayList.get(i).getName() + "->IPCLIENT");
+//                        Scanner teclado = new Scanner(System.in);
+                        ObjectOutputStream saida = new ObjectOutputStream(servidor.ipArrayList.get(i).getOutputStream());
+//                        while(teclado.hasNextLine()){
+//                            System.out.println("Digite: ");
+//                            saida.println(teclado.nextLine());
+//                        }
+                        saida.writeObject(msg);
+                        saida.flush();
+                        //saida.close();
                     }
                     else{
                         System.out.println("halou");

@@ -72,9 +72,11 @@ public class Cliente implements Serializable {
                 System.out.println();
                 System.out.print("Você deseja visualizar suas mensangens recebidas ?(Y/N) ");
                 if (t_terminal.readLine().intern() == "Y"){
-                    //rec.getPilha();
+                    Receiver mostraNaTela = new Receiver();
+                    mostraNaTela.getPilha();
+                    System.out.println("to passando");
                 }
-                objSaida.close();
+//                objSaida.close();
             }else{
                 objSaida.writeObject(msg);
                 objSaida.flush();
