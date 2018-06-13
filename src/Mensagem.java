@@ -6,7 +6,6 @@ public class Mensagem implements Serializable {
     private String texto = null;
     private String remetente;
     private String destinatario;
-    private String ip_destinatario;
     public boolean flag = true;
     Date d = new Date();
     private String date = d.toString();
@@ -35,24 +34,12 @@ public class Mensagem implements Serializable {
         return remetente;
     }
 
-    public void setRemetente(String remetente) {
-        this.remetente = remetente;
-    }
-
     public String getDestinatario() {
         return destinatario;
     }
 
     public void setDestinatario(String destinatario) {
         this.destinatario = destinatario;
-    }
-
-    public String getName() {
-        return ip_destinatario;
-    }
-
-    public void setIp_destinatario(String ip_destinatario) {
-        this.ip_destinatario = ip_destinatario;
     }
 
     public String getDate() {

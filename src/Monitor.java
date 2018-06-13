@@ -1,6 +1,5 @@
 import java.io.*;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class Monitor implements Runnable {
     private Servidor servidor;
@@ -40,30 +39,21 @@ public class Monitor implements Runnable {
             System.out.println("Data: " + msg.getDate());
             System.out.println("Assunto: " + msg.getAssunto());
             System.out.println("Texto: " + msg.getTexto());
-            //                System.out.println("Index: "+this.index);
             System.out.println();
             if(servidor.clienteArrayList.isEmpty()){
-                System.out.println("vazio!");
+                System.out.println("Sem clientes!");
             }else{
                 for (int i = 0; i < servidor.clienteArrayList.size(); i++) {
                     if (servidor.clienteArrayList.get(i).getName().intern() ==
                             msg.getDestinatario().intern()) {
-//                        System.out.println(msg.getDestinatario().intern() + "->IPDEST");
-//                        System.out.println(servidor.clienteArrayList.get(i).getName() + "->IPCLIENT");
-//                        Scanner teclado = new Scanner(System.in);
                         ObjectOutputStream saida = new ObjectOutputStream(servidor.ipArrayList.get(i).getOutputStream());
-//                        while(teclado.hasNextLine()){
-//                            System.out.println("Digite: ");
-//                            saida.println(teclado.nextLine());
-//                        }
                         saida.writeObject(msg);
                         saida.flush();
-                        //saida.close();
                     }
-                    else{
-//                        System.out.println("halou");
+                    if(!flag && servidor.clienteArrayList.get(i).getName().intern()== msg.getRemetente().intern()){
+                        servidor.clienteArrayList.remove(i);
+                        servidor.ipArrayList.remove(i);
                     }
-
                 }
             }
         } catch (IOException e) {

@@ -2,17 +2,13 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Receiver implements Runnable{
     private Socket emissor;
     private static ArrayList<Mensagem> msgList = new <Mensagem>ArrayList();
+    public boolean flag = true;
 
-    public Receiver() {
-
-    }
-
-    public Receiver(Socket emissor) {
+    public Receiver(Socket emissor){
         this.emissor = emissor;
         Thread t = new Thread(this);
         t.start();
@@ -36,18 +32,16 @@ public class Receiver implements Runnable{
 
     @Override
     public void run() {
+
         try {
-            while (true){
-//                System.out.println("ola");
-                ObjectInputStream entrada = new ObjectInputStream(this.emissor.getInputStream());
+            ObjectInputStream entrada = null;
+            while (flag) {
+                entrada = new ObjectInputStream(this.emissor.getInputStream());
                 Mensagem msg = (Mensagem) entrada.readObject();
-                System.out.println(msg.getRemetente());
                 this.msgList.add(msg);
-//                Scanner entrada = new Scanner(this.emissor.getInputStream());
-//                while (entrada.hasNextLine()) {
-//                    System.out.println(entrada.nextLine());
-//                }
-//                System.out.println("add!");
+                System.out.println();
+                System.out.println("***Nova Mensagem***");
+                System.out.println();
             }
         } catch (IOException e) {
             e.printStackTrace();
