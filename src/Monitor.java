@@ -61,7 +61,7 @@ public class Monitor implements Runnable {
                         //saida.close();
                     }
                     else{
-                        System.out.println("halou");
+//                        System.out.println("halou");
                     }
 
                 }

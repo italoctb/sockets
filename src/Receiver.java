@@ -22,7 +22,7 @@ public class Receiver implements Runnable{
         if (this.msgList.isEmpty()){
             System.out.println("Você não possui mensagens.");
         }else{
-            for(int i = this.msgList.size(); i<0;i--){
+            for(int i = this.msgList.size()-1; i>=0;i--){
                 System.out.println();
                 System.out.println("Remetente: "+this.msgList.get(i).getRemetente());
                 System.out.println("Destinatario: "+this.msgList.get(i).getDestinatario());

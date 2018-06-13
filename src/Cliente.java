@@ -2,11 +2,13 @@ import java.io.*;
 import java.net.Socket;
 import java.io.Serializable;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 public class Cliente implements Serializable {
     private String Name;
     private String ip;
     private int port;
+    private static ArrayList<Mensagem> msgList = new <Mensagem>ArrayList();
 
     public boolean flag = false;
 
@@ -72,8 +74,7 @@ public class Cliente implements Serializable {
                 System.out.println();
                 System.out.print("Você deseja visualizar suas mensangens recebidas ?(Y/N) ");
                 if (t_terminal.readLine().intern() == "Y"){
-                    Receiver mostraNaTela = new Receiver();
-                    mostraNaTela.getPilha();
+                    rec.getPilha();
                     System.out.println("to passando");
                 }
 //                objSaida.close();
