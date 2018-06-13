@@ -18,6 +18,9 @@ public class Monitor implements Runnable {
         boolean flag = true;
         while(flag){
             try {
+                /*
+                * Recebe os dados do cliente como nome e salva em clienteArrayList.
+                * */
                 entrada = new ObjectInputStream(this.cliente.getInputStream());
                 Cliente cliente = (Cliente) entrada.readObject();
                 servidor.clienteArrayList.add(cliente);
@@ -30,6 +33,9 @@ public class Monitor implements Runnable {
         }
         flag = true;
         while (flag) try {
+            /*
+            * Imprime no servidor a mensagem recebida do usuário.
+            * */
             entrada = new ObjectInputStream(this.cliente.getInputStream());
             Mensagem msg = (Mensagem) entrada.readObject();
             flag = msg.flag;
@@ -43,6 +49,9 @@ public class Monitor implements Runnable {
             if(servidor.clienteArrayList.isEmpty()){
                 System.out.println("Sem clientes!");
             }else{
+                /*
+                * Procura o destinatário da mensagem e a envia pra ele procurando na lista de Sockets.
+                * */
                 for (int i = 0; i < servidor.clienteArrayList.size(); i++) {
                     if (servidor.clienteArrayList.get(i).getName().intern() ==
                             msg.getDestinatario().intern()) {
@@ -50,6 +59,9 @@ public class Monitor implements Runnable {
                         saida.writeObject(msg);
                         saida.flush();
                     }
+                    /*
+                    * Caso o usuário tenha se desconectado(flag acionada), Excluiremos das listas.
+                    * */
                     if(!flag && servidor.clienteArrayList.get(i).getName().intern()== msg.getRemetente().intern()){
                         servidor.clienteArrayList.remove(i);
                         servidor.ipArrayList.remove(i);

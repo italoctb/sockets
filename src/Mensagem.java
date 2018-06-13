@@ -2,12 +2,15 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Mensagem implements Serializable {
+    /*
+    * Estrutura da mensagem com a flag com a situação de logOff.
+    * */
+    public boolean flag = true;
+    Date d = new Date();
     private String assunto = null;
     private String texto = null;
     private String remetente;
     private String destinatario;
-    public boolean flag = true;
-    Date d = new Date();
     private String date = d.toString();
 
     public Mensagem(String remetente) {

@@ -4,15 +4,19 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class Receiver implements Runnable{
-    private Socket emissor;
-    private static ArrayList<Mensagem> msgList = new <Mensagem>ArrayList();
+    private static ArrayList<Mensagem> msgList = new <Mensagem>ArrayList(); //Array onde armazena as mensagens para cada usuário.
     public boolean flag = true;
+    private Socket emissor;
 
     public Receiver(Socket emissor){
-        this.emissor = emissor;
+        this.emissor = emissor; //Servidor.
         Thread t = new Thread(this);
         t.start();
     }
+
+    /*
+    * Da Lista de Mensagens recebidas, função mostra a lista em formato de pilha na tela.
+    * */
 
     public void getPilha() {
         if (this.msgList.isEmpty()){
@@ -36,8 +40,14 @@ public class Receiver implements Runnable{
         try {
             ObjectInputStream entrada = null;
             while (flag) {
+                /*
+                * Thread para cada usuário ficar recebendo mensagem em qualquer momento.
+                * */
                 entrada = new ObjectInputStream(this.emissor.getInputStream());
                 Mensagem msg = (Mensagem) entrada.readObject();
+                /*
+                * Adiciona as mensagens nem uma lista.
+                * */
                 this.msgList.add(msg);
                 System.out.println();
                 System.out.println("***Nova Mensagem***");
